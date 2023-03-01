@@ -1,0 +1,77 @@
+openapi: 3.0.3
+info:
+  title: Node.js API Example
+  version: 1.0.0
+  description: A simple Node.js API example with GET, POST, and PUT routes.
+servers:
+  - url: http://localhost:3000
+paths:
+  /hello:
+    get:
+      summary: Return a greeting message.
+      responses:
+        '200':
+          description: OK.
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Hello, world!
+    post:
+      summary: Not supported.
+      responses:
+        '405':
+          description: Method not allowed.
+  /message:
+    post:
+      summary: Receive a message.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+            example:
+              message: Hello, world!
+      responses:
+        '200':
+          description: OK.
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Received message: Hello, world!
+    put:
+      summary: Update a message by ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the message to update.
+          schema:
+            type: string
+          example: 123
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+            example:
+              message: Hello, world!
+      responses:
+        '200':
+          description: OK.
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Updated message with id 123 to: Hello, world!
+        '404':
+          description: Not found.
