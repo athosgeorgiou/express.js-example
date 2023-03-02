@@ -92,9 +92,21 @@ describe("MessageController", () => {
     });
   });
 
-  describe.skip("getAllMessages", () => {
-    it("should return an array of messages", () => {
-      
+  describe("getAllMessages", () => {
+    it("should send all messages in response body", () => {
+      const getAllMessagesSpy = sinon.spy(MessageModel, "getAllMessages");
+
+      const req = {};
+      const res = {
+        status: sinon.stub().returnsThis(),
+        send: sinon.spy(),
+      };
+
+      MessageController.getAllMessages(req, res);
+      expect(getAllMessagesSpy.calledOnce).to.be.true;
+      expect(res.status.calledWith(200)).to.be.true;
+      expect(res.send.calledWith(MessageModel.getAllMessages())).to.be.true;
+      getAllMessagesSpy.restore();
     });
   });
 });
